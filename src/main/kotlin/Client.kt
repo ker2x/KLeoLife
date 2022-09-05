@@ -14,35 +14,28 @@ fun main() {
 
 // setup function runs once
 fun setup() {
-
     // Setup data class
     val gfx = GraphicData(window.innerWidth, window.innerHeight)
-    val ui = UIData("KleoLife", "0.0.1-SNAPSHOT")
+    val ui = UIData("KleoLife", "0.0.2-SNAPSHOT")
 
-    // set title
+    // prepare index.html
     document.title = "${ui.title} - v${ui.version}"
-
-    // body style
     document.body!!.style.backgroundColor = "darkslategray"
     document.body!!.style.margin = "0px"
     document.body!!.style.padding = "0px"
     document.body!!.style.overflowX = "hidden"
     document.body!!.style.overflowY = "hidden"
 
-    // late init GraphicData.canvas
-    gfx.canvas = document.createElement("canvas") as HTMLCanvasElement
-    gfx.canvas.width = gfx.width
-    gfx.canvas.height = gfx.height
 
-    // append canvas to body
+    // Create canvas
+    gfx.canvas = document.createElement("canvas") as HTMLCanvasElement
+    gfx.ctx = gfx.canvas.getContext("webgl") as WebGLRenderingContext
+    UIUtils.resizeCanvas(gfx, window.innerWidth, window.innerHeight)
     document.body!!.append(gfx.canvas)
 
-    // late init GraphicData.ctx
-    gfx.ctx = gfx.canvas.getContext("webgl") as WebGLRenderingContext
-
     // add listeners
-    window.onresize = { UIUtils.resize(gfx) }
-    gfx.canvas.onclick = { UIUtils.mouseClick(gfx, it.x, it.y) }
+    window.onresize = { UIUtils.resizeCallback(gfx) }
+    gfx.canvas.onclick = { UIUtils.mouseClickCallback(gfx, it.x, it.y) }
 
     // request animation frame
     window.requestAnimationFrame { draw(gfx) }
