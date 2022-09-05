@@ -4,9 +4,10 @@ import org.khronos.webgl.WebGLRenderingContext
 import org.w3c.dom.HTMLCanvasElement
 
 import kleolife.data.GraphicData
-import kleolife.data.UIData
+import kleolife.data.AppData
 import kleolife.gl.GLUtils
 import kleolife.ui.*
+import org.keru.KLeoLife.*
 
 fun main() {
     window.onload = { setup() }
@@ -16,10 +17,10 @@ fun main() {
 fun setup() {
     // Setup data class
     val gfx = GraphicData(window.innerWidth, window.innerHeight)
-    val ui = UIData("KleoLife", "0.0.2-SNAPSHOT")
+    val app = AppData(BuildConfig.APP_NAME, BuildConfig.APP_VERSION)  // see build.gradle.kts
 
     // prepare index.html
-    document.title = "${ui.title} - v${ui.version}"
+    document.title = "${app.title} - v${app.version}"
     document.body!!.style.backgroundColor = "darkslategray"
     document.body!!.style.margin = "0px"
     document.body!!.style.padding = "0px"
