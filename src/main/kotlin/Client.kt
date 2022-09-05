@@ -11,6 +11,12 @@ fun main() {
 // setup function runs once
 fun setup() {
     console.log("entering setup")
+
+    document.body!!.style.backgroundColor = "grey"
+    document.body!!.style.margin = "0px"
+    document.body!!.style.padding = "0px"
+    document.body!!.style.overflowX = "hidden"
+    document.body!!.style.overflowY = "hidden"
     val gfx = GraphicData(window.innerWidth, window.innerHeight)
 
     // create canvas
