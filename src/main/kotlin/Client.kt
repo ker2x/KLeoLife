@@ -22,6 +22,9 @@ fun setup() {
 
     gfx.ctx = gfx.canvas.getContext("2d") as CanvasRenderingContext2D
 
+    // add window resize listener
+    window.onresize = { resize(gfx) }
+
     // request animation frame
     window.requestAnimationFrame { draw(gfx) }
 }
@@ -35,4 +38,12 @@ fun draw(gfx: GraphicData) {
     gfx.ctx.fill()
     // request next draw loop
     window.requestAnimationFrame { draw(gfx) }
+}
+
+// resize function runs when window is resized
+fun resize(gfx: GraphicData) {
+    gfx.width = window.innerWidth
+    gfx.height = window.innerHeight
+    gfx.canvas.width = gfx.width
+    gfx.canvas.height = gfx.height
 }
