@@ -40,10 +40,8 @@ fun setup() {
     // late init GraphicData.ctx
     gfx.ctx = gfx.canvas.getContext("webgl") as WebGLRenderingContext
 
-    // add window resize listener
+    // add listeners
     window.onresize = { UIUtils.resize(gfx) }
-
-    // add mouse listener on canvas
     gfx.canvas.onclick = { UIUtils.mouseClick(gfx, it.x, it.y) }
 
     // request animation frame
