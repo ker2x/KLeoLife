@@ -1,8 +1,12 @@
 import kotlinx.browser.document
 import kotlinx.browser.window
-import org.w3c.dom.CanvasRenderingContext2D
+import org.khronos.webgl.WebGLRenderingContext
 import org.w3c.dom.HTMLCanvasElement
 
+import kleolife.data.GraphicData
+import kleolife.data.UIData
+import kleolife.gl.GLUtils
+import kleolife.ui.*
 
 fun main() {
     window.onload = { setup() }
@@ -11,30 +15,36 @@ fun main() {
 // setup function runs once
 fun setup() {
 
-    // Setup application class
+    // Setup data class
     val gfx = GraphicData(window.innerWidth, window.innerHeight)
+    val ui = UIData("KleoLife", "0.0.1-SNAPSHOT")
+
+    // set title
+    document.title = "${ui.title} - v${ui.version}"
 
     // body style
-    document.body!!.style.backgroundColor = "grey"
+    document.body!!.style.backgroundColor = "darkslategray"
     document.body!!.style.margin = "0px"
     document.body!!.style.padding = "0px"
     document.body!!.style.overflowX = "hidden"
     document.body!!.style.overflowY = "hidden"
 
-    // create & append canvas
+    // late init GraphicData.canvas
     gfx.canvas = document.createElement("canvas") as HTMLCanvasElement
     gfx.canvas.width = gfx.width
     gfx.canvas.height = gfx.height
+
+    // append canvas to body
     document.body!!.append(gfx.canvas)
 
-    // get canvas context
-    gfx.ctx = gfx.canvas.getContext("2d") as CanvasRenderingContext2D
+    // late init GraphicData.ctx
+    gfx.ctx = gfx.canvas.getContext("webgl") as WebGLRenderingContext
 
     // add window resize listener
-    window.onresize = { resize(gfx) }
+    window.onresize = { UIUtils.resize(gfx) }
 
     // add mouse listener on canvas
-    gfx.canvas.onclick = { mouseClick(gfx, it.x, it.y) }
+    gfx.canvas.onclick = { UIUtils.mouseClick(gfx, it.x, it.y) }
 
     // request animation frame
     window.requestAnimationFrame { draw(gfx) }
@@ -43,23 +53,9 @@ fun setup() {
 // draw function runs continuously at browser refresh rate
 fun draw(gfx: GraphicData) {
     // clear canvas
-    gfx.ctx.beginPath()
-    gfx.ctx.fillStyle = "black"
-    gfx.ctx.rect(0.0, 0.0, gfx.width.toDouble(),gfx.height.toDouble())
-    gfx.ctx.fill()
+    GLUtils.clearScreen(gfx)
+
     // request next draw loop
     window.requestAnimationFrame { draw(gfx) }
 }
 
-// resize function runs when window is resized
-fun resize(gfx: GraphicData) {
-    gfx.width = window.innerWidth
-    gfx.height = window.innerHeight
-    gfx.canvas.width = gfx.width
-    gfx.canvas.height = gfx.height
-}
-
-// mouseClick function runs when mouse is clicked on canvas
-fun mouseClick(gfx: GraphicData, x: Double, y: Double) {
-    console.log("Mouse click on $gfx at $x, $y")
-}
