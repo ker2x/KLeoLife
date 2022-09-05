@@ -1,9 +1,10 @@
 plugins {
     kotlin("js") version "1.7.10"
+    id("com.github.gmazzo.buildconfig") version "3.1.0"
 }
 
 group = "org.keru"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.3-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -24,4 +25,9 @@ kotlin {
             }
         }
     }
+}
+
+buildConfig {
+    buildConfigField("String", "APP_VERSION", provider { "\"${project.version}\"" })
+    buildConfigField("String", "APP_NAME", provider { "\"${project.name}\"" })
 }
