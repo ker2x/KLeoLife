@@ -10,26 +10,31 @@ fun main() {
 
 // setup function runs once
 fun setup() {
-    console.log("entering setup")
 
+    // Setup application class
+    val gfx = GraphicData(window.innerWidth, window.innerHeight)
+
+    // body style
     document.body!!.style.backgroundColor = "grey"
     document.body!!.style.margin = "0px"
     document.body!!.style.padding = "0px"
     document.body!!.style.overflowX = "hidden"
     document.body!!.style.overflowY = "hidden"
-    val gfx = GraphicData(window.innerWidth, window.innerHeight)
 
-    // create canvas
-    console.log("creating canvas")
+    // create & append canvas
     gfx.canvas = document.createElement("canvas") as HTMLCanvasElement
     gfx.canvas.width = gfx.width
     gfx.canvas.height = gfx.height
     document.body!!.append(gfx.canvas)
 
+    // get canvas context
     gfx.ctx = gfx.canvas.getContext("2d") as CanvasRenderingContext2D
 
     // add window resize listener
     window.onresize = { resize(gfx) }
+
+    // add mouse listener on canvas
+    gfx.canvas.onclick = { mouseClick(gfx, it.x, it.y) }
 
     // request animation frame
     window.requestAnimationFrame { draw(gfx) }
@@ -40,7 +45,7 @@ fun draw(gfx: GraphicData) {
     // clear canvas
     gfx.ctx.beginPath()
     gfx.ctx.fillStyle = "black"
-    gfx.ctx.rect(0.0, 0.0, gfx.width,gfx.height)
+    gfx.ctx.rect(0.0, 0.0, gfx.width.toDouble(),gfx.height.toDouble())
     gfx.ctx.fill()
     // request next draw loop
     window.requestAnimationFrame { draw(gfx) }
@@ -52,4 +57,9 @@ fun resize(gfx: GraphicData) {
     gfx.height = window.innerHeight
     gfx.canvas.width = gfx.width
     gfx.canvas.height = gfx.height
+}
+
+// mouseClick function runs when mouse is clicked on canvas
+fun mouseClick(gfx: GraphicData, x: Double, y: Double) {
+    console.log("Mouse click on $gfx at $x, $y")
 }
