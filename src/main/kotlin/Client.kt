@@ -26,7 +26,6 @@ fun setup() {
     document.body!!.style.overflowX = "hidden"
     document.body!!.style.overflowY = "hidden"
 
-
     // Create canvas
     gfx.canvas = document.createElement("canvas") as HTMLCanvasElement
     gfx.ctx = gfx.canvas.getContext("webgl") as WebGLRenderingContext
@@ -37,7 +36,7 @@ fun setup() {
     window.onresize = { UIUtils.resizeCallback(gfx) }
     gfx.canvas.onclick = { UIUtils.mouseClickCallback(gfx, it.x, it.y) }
 
-    // request animation frame
+    // setup complete, start rendering
     window.requestAnimationFrame { draw(gfx) }
 }
 
