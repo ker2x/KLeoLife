@@ -1,7 +1,7 @@
 package kleolife.data
 
 
-data class UIData(
-    val title: String = "KleoLife",
+data class AppData(
+    val title: String = "no title defined",
     val version: String = "no version defined"
 )
