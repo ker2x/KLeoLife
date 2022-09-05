@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "org.keru"
-version = "1.0-SNAPSHOT"
+version = "0.0.1-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -16,7 +16,7 @@ dependencies {
 }
 
 kotlin {
-    js(LEGACY) {
+    js(IR) {
         binaries.executable()
         browser {
             commonWebpackConfig {
