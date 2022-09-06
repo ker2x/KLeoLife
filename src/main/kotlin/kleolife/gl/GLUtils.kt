@@ -2,14 +2,17 @@ package kleolife.gl
 
 import kleolife.data.GraphicData
 import org.khronos.webgl.WebGLProgram
-import org.khronos.webgl.WebGLRenderingContext
+import org.khronos.webgl.WebGLRenderingContext as GL
 import org.khronos.webgl.WebGLShader
 
 class GLUtils {
     companion object {
         fun clearScreen(gfx: GraphicData) {
             gfx.ctx.clearColor(0.0f, 0.0f, 0.0f, 1.0f)
-            gfx.ctx.clear(WebGLRenderingContext.COLOR_BUFFER_BIT)
+            gfx.ctx.clearDepth(1.0F);
+            gfx.ctx.enable(GL.DEPTH_TEST)
+            gfx.ctx.depthFunc(GL.LEQUAL)
+            gfx.ctx.clear(GL.COLOR_BUFFER_BIT or GL.DEPTH_BUFFER_BIT)
         }
 
         fun createShader(gfx: GraphicData, type: Int, source: String): WebGLShader? {
