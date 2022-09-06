@@ -5,9 +5,9 @@ import org.w3c.dom.HTMLCanvasElement
 
 import kleolife.data.GraphicData
 import kleolife.data.AppData
-import kleolife.gl.GLUtils
-import kleolife.ui.*
-import org.keru.KLeoLife.*
+import kleolife.gl.GLUtils as GLu
+import kleolife.ui.UIUtils as UIu
+import org.keru.KLeoLife.*  // used for BuildConfig, it's a small bug on my side that need to be fixed
 
 fun main() {
     window.onload = { setup() }
@@ -30,12 +30,12 @@ fun setup() {
     // Create canvas
     gfx.canvas = document.createElement("canvas") as HTMLCanvasElement
     gfx.ctx = gfx.canvas.getContext("webgl") as WebGLRenderingContext
-    UIUtils.resizeCanvas(gfx, window.innerWidth, window.innerHeight)
+    UIu.resizeCanvas(gfx, window.innerWidth, window.innerHeight)
     document.body!!.append(gfx.canvas)
 
     // add listeners
-    window.onresize = { UIUtils.resizeCallback(gfx) }
-    gfx.canvas.onclick = { UIUtils.mouseClickCallback(gfx, it.x, it.y) }
+    window.onresize = { UIu.resizeCallback(gfx) }
+    gfx.canvas.onclick = { UIu.mouseClickCallback(gfx, it.x, it.y) }
 
     // setup complete, start rendering
     window.requestAnimationFrame { draw(gfx) }
@@ -44,7 +44,7 @@ fun setup() {
 // draw function runs continuously at browser refresh rate
 fun draw(gfx: GraphicData) {
     // clear canvas
-    GLUtils.clearScreen(gfx)
+    GLu.clearScreen(gfx)
 
     // request next draw loop
     window.requestAnimationFrame { draw(gfx) }
